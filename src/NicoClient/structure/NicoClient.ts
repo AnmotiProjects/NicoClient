@@ -1,4 +1,4 @@
-import NicoVideoJP from '../wrapper/NicoVideoJP';
+import www_NicoVideoJP from '../wrapper/NicoVideoJP.www';
 import Video from './Video';
 
 interface NicoClientOption {
@@ -6,10 +6,10 @@ interface NicoClientOption {
 }
 
 class NicoClient {
-    private nicoVideoJP: NicoVideoJP;
+    private nicoVideoJP: www_NicoVideoJP;
 
     constructor(option: NicoClientOption = {}) {
-        this.nicoVideoJP = new NicoVideoJP(option.apiClients?.nicoVideoJP);
+        this.nicoVideoJP = new www_NicoVideoJP(option.apiClients?.nicoVideoJP);
 
         console.log('NicoAPI initialized');
     }
