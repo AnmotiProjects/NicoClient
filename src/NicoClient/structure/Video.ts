@@ -39,7 +39,7 @@ class Video extends Base {
     public readonly videoID: string;
     public readonly title: string;
     public readonly description: string;
-    public readonly registredAt: Date;
+    public readonly registeredAt: Date;
     public readonly duration: number;
     public readonly viewCount: number;
     public readonly commentCount: number;
@@ -81,7 +81,7 @@ class Video extends Base {
         this.videoID = data.video.id;
         this.title = data.video.title;
         this.description = data.video.description;
-        this.registredAt = new Date(data.video.registeredAt);
+        this.registeredAt = new Date(data.video.registeredAt);
         this.duration = data.video.duration;
         this.viewCount = data.video.count.view;
         this.commentCount = data.video.count.comment;
