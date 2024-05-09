@@ -18,6 +18,16 @@ class nvapi_NicoVideoJP extends NicoVideoJP {
         const response = res.data as NicoVideoJPRawResponse<NicoVideoJPHelloData>;
         return response.data;
     }
+
+    async fetchUser(userID: string) {
+        const res = await this.get(userID, {
+            path: 'v1/users/',
+            defaultHeaders: true,
+            login: true,
+        });
+        const response = res.data as NicoVideoJPRawResponse<NicoVideoJPUserData>;
+        return response.data;
+    }
 }
 
 export default nvapi_NicoVideoJP;

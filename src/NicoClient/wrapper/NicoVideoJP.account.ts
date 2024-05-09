@@ -33,7 +33,7 @@ class secure_NicoVideoJP extends NicoVideoJP {
 
     // async fetchLoginWithMFA() {}
 
-    async fetchAccountInfo() {
+    async fetchMyAccountInfo() {
         const res = await this.get('api/public/v2/user.json', {
             login: true,
         });

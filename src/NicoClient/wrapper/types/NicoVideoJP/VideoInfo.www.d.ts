@@ -1,7 +1,7 @@
 interface NicoVideoJPVideoInfoData {
-    ads: any;
-    category: any;
-    channel: any;
+    ads: any | null;
+    category: any | null;
+    channel: NicoVideoJPVideoInfoChannelData | null;
     client: {
         nicosid: string;
         watchId: string;
@@ -9,10 +9,10 @@ interface NicoVideoJPVideoInfoData {
     };
     comment: {
         server: {
-            url: any;
+            url: string | null;
         };
         keys: {
-            userKey: any;
+            userKey: string | null;
         };
         layers: NicoVideoJPVideoInfoLayer[];
         threads: NicoVideoJPVideoInfoThread[];
@@ -22,37 +22,67 @@ interface NicoVideoJPVideoInfoData {
             };
             channel: any[];
             owner: any[];
-            viewer: any[];
+            viewer: any[] | null;
         };
         isAttentionRequired: boolean;
         nvComment: nvComment;
     };
-    community: any;
+    community: any | null;
     easyComment: NicoVideoJPVideoInfoEasyComment[];
-    external: any;
+    external: any | null;
     genre: NicoVideoJPVideoInfoGenre;
-    marquee: any;
-    okReasion: string;
-    owner: {
-        id: number;
-        nickname: string;
-        iconUrl: string;
-        channel: any;
-        live: any;
-        isVideosPublic: boolean;
-        isMylistsPublic: boolean;
-        videoLiveNotice: any;
-        viewer: any;
-    };
-    ranking: {
-        genre: {
-            rank: number;
-            genre: string;
-            dateTime: string;
+    marquee: any | null;
+    media: {
+        domand: {
+            videos: any[];
+            audios: any[];
+            isStoryboardAvailable: boolean;
+            accessRightKey: string;
         };
+        delivery: any | null;
+        deliveryLegacy: any | null;
+    };
+    okReasion: string;
+    owner: NicoVideoJPVideoInfoOwnerData | null;
+    payment: {
+        video: {
+            isPpv: boolean;
+            isAdmission: boolean;
+            isContinuationBenefit: boolean;
+            isPremium: boolean;
+            watchableUserType: string;
+            billingType: string;
+        };
+        preview: {
+            ppv: {
+                isEnabled: boolean;
+            };
+            admission: {
+                isEnabled: boolean;
+            };
+            continuationBenefit: {
+                isEnabled: boolean;
+            };
+            premium: {
+                isEnabled: boolean;
+            };
+        };
+    };
+    pcWatchPage: any | null;
+    player: {
+        initialPlayback: any | null;
+        comment: {
+            isDefaultInvisible: boolean;
+        };
+        layerMode: number;
+    };
+    ppv: any | null;
+    ranking: {
+        genre: NicoVideoJPVideoInfoRankingGenre | null;
         popularTag: NicoVideoJPVideoInfoRankingTag[];
     };
-    series: any;
+    series: any | null;
+    smartphone: any | null;
     system: {
         serverTime: string;
         isPeakTime: boolean;
@@ -65,9 +95,9 @@ interface NicoVideoJPVideoInfoData {
         edit: {
             isEditable: boolean;
             uneditableReason: string;
-            editKey: any;
+            editKey: any | null;
         };
-        viewer: any;
+        viewer: any | null;
     };
     video: {
         id: string;
@@ -80,12 +110,12 @@ interface NicoVideoJPVideoInfoData {
             like: number;
         };
         duration: number;
-        thumbnail: { [key: string]: string | undefined } & {
-            url?: string;
-            middleUrl?: string;
-            largeUrl?: string;
-            player?: string;
-            ogp?: string;
+        thumbnail: {
+            url: string;
+            middleUrl: string;
+            largeUrl: string;
+            player: string;
+            ogp: string;
         };
         rating: {
             isAdult: boolean;
@@ -97,10 +127,61 @@ interface NicoVideoJPVideoInfoData {
         isAuthenticationRequired: boolean;
         isEmbedPlayerAllowed: boolean;
         isGiftAllowed: boolean;
-        viewer: any;
+        viewer: any | null;
         watchableUserTypeForPayment: string;
         commentableUserTypeForPayment: string;
+        '9d091f87': boolean;
     };
+    videoAds: {
+        additionalParams: {
+            videoId: string;
+            videoDuration: number;
+            isAdultRatingNG: boolean;
+            isAuthenticationRequired: boolean;
+            isR18: boolean;
+            nicosid: string;
+            lang: string;
+            watchTrackId: string;
+            channelId: string;
+            genre: string;
+        };
+        items: any[];
+        reason: string | null;
+    };
+    videoLive: any | null;
+    viewer: any | null;
+    waku: {
+        information: any | null;
+        bgImages: any[];
+        addContents: any | null;
+        addVideo: any | null;
+        tagRelatedBanner: NicoVideoJPVideoInfoWakuTagRelatedBannerData | null;
+        tagRelatedMarquee: any | null;
+    };
+}
+
+interface NicoVideoJPVideoInfoChannelData {
+    id: string;
+    name: string;
+    isOfficialAnime: boolean;
+    isDisplayAdBanner: boolean;
+    thumbnail: {
+        url: string;
+        smallUrl: string;
+    };
+    viewer: any | null;
+}
+
+interface NicoVideoJPVideoInfoOwnerData {
+    id: number;
+    nickname: string;
+    iconUrl: string;
+    channel: any | null;
+    live: any | null;
+    isVideosPublic: boolean;
+    isMylistsPublic: boolean;
+    videoLiveNotice: any | null;
+    viewer: any | null;
 }
 
 interface NicoVideoJPVideoInfoGenre {
@@ -113,7 +194,7 @@ interface NicoVideoJPVideoInfoGenre {
 
 interface NicoVideoJPVideoInfoLayer {
     index: number;
-    isTranslatable: boolean;
+    isTranslucent: boolean;
     threadIds: NicoVideoJPVideoInfoThreadID[];
 }
 
@@ -131,12 +212,12 @@ interface NicoVideoJPVideoInfoThread extends NicoVideoJPVideoInfoThreadID {
     isLeafRequired: boolean;
     isOwnerThread: boolean;
     isThreadkeyRequired: boolean;
-    threadkey: any;
+    threadkey: string | null;
     is184Forced: boolean;
     hasNicoscript: boolean;
     label: string;
     postkeyStatus: number;
-    server: any;
+    server: string | null;
 }
 
 interface NicoVideoJPVideoInfoEasyComment {
@@ -153,6 +234,12 @@ interface NicoVideoJPVideoInfoEasyCommentPhrase {
     };
 }
 
+interface NicoVideoJPVideoInfoRankingGenre {
+    rank: number;
+    genre: string;
+    dateTime: string;
+}
+
 interface NicoVideoJPVideoInfoRankingTag {
     tag: string;
     regularizedTag: string;
@@ -167,4 +254,15 @@ interface NicoVideoJPVideoInfoTagItem {
     isCategoryCandidate: boolean;
     isNicodicArticleExists: boolean;
     isLocked: boolean;
+}
+
+interface NicoVideoJPVideoInfoWakuTagRelatedBannerData {
+    title: string;
+    imageUrl: string;
+    description: string;
+    isEvent: boolean;
+    linkUrl: string;
+    linkType: string;
+    linkOrigin: string;
+    isNewWindow: boolean;
 }

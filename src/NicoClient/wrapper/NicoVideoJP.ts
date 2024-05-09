@@ -18,11 +18,10 @@ class NicoVideoJP extends BaseWrapper {
         return url;
     }
     public header: { [key: string]: string } = {
-        // 'Content-Type': 'text/plain;charset=UTF-8',
         'X-Frontend-Id': '2',
         'X-Frontend-Version': '9.46',
-        'X-Niconico-Language': 'ja-jp',
-        'X-Client-Os-Type': 'others',
+        // 'X-Niconico-Language': 'ja-jp',
+        // 'X-Client-Os-Type': 'others',
     };
 
     constructor(subDomain: string, ...args: ConstructorParameters<typeof BaseWrapper>) {

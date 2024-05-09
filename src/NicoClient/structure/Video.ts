@@ -46,14 +46,14 @@ class Video extends Base {
     public readonly mylistCount: number;
     public readonly likeCount: number;
 
-    public readonly owner: NicoClientVideoUser;
+    public readonly owner?: NicoClientVideoUser;
     public readonly genre: NicoVideoJPVideoInfoGenre;
     public readonly thumbnail: NicoVideoJPVideoInfoData['video']['thumbnail'];
     public readonly tags: Map<string, NicoClientVideoTagData>;
     // public readonly tagEdit: NicoClientVideoTagEdit <- not implemented
     //                          ^ uneditableReason, editKey, etc.
     public readonly hasR18Tag: boolean;
-    public readonly genreRanking: NicoClientVideoRankingGenre;
+    public readonly genreRanking?: NicoClientVideoRankingGenre;
     public readonly tagsRanking: NicoClientVideoRankingTag[];
     // public readonly series: any | undefined;
 
@@ -88,11 +88,13 @@ class Video extends Base {
         this.mylistCount = data.video.count.mylist;
         this.likeCount = data.video.count.like;
 
-        this.owner = {
-            id: data.owner.id,
-            nickname: data.owner.nickname,
-            iconURL: data.owner.iconUrl,
-        };
+        if (data.owner !== null) {
+            this.owner = {
+                id: data.owner.id,
+                nickname: data.owner.nickname,
+                iconURL: data.owner.iconUrl,
+            };
+        }
         this.genre = data.genre;
         this.thumbnail = data.video.thumbnail;
         this.tags = new Map();
@@ -106,11 +108,13 @@ class Video extends Base {
         });
         // this.tagEdit = <>;
         this.hasR18Tag = data.tag.hasR18Tag;
-        this.genreRanking = {
-            rank: data.ranking.genre.rank,
-            genre: data.ranking.genre.genre,
-            date: new Date(data.ranking.genre.dateTime),
-        };
+        if (data.ranking.genre !== null) {
+            this.genreRanking = {
+                rank: data.ranking.genre.rank,
+                genre: data.ranking.genre.genre,
+                date: new Date(data.ranking.genre.dateTime),
+            };
+        }
         this.tagsRanking = data.ranking.popularTag.map(tag => ({
             tag: tag.tag,
             regularizedTag: tag.regularizedTag,

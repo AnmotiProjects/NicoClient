@@ -10,6 +10,8 @@ class www_NicoVideoJP extends NicoVideoJP {
 
     async fetchVideoInfo(videoID: string) {
         const res = await this.post(videoID, {
+            // path: 'api/watch/v3/',
+            // login: true,
             path: 'api/watch/v3_guest/',
             params: { actionTrackId: generateActionTrackID() },
             defaultHeaders: true,
