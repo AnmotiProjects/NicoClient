@@ -1,22 +1,41 @@
-import www_NicoVideoJP from '../wrapper/NicoVideoJP.www';
+import { AxiosStatic } from 'axios';
 import Video from './Video';
+import www_NicoVideoJP from '../wrapper/NicoVideoJP.www';
+import nvapi_NicoVideoJP from '../wrapper/NicoVideoJP.nvapi';
+import account_NicoVideoJP from '../wrapper/NicoVideoJP.account';
 
 interface NicoClientOption {
-    apiClients?: { [key: string]: new () => any };
+    sessionID?: string;
+    axios: AxiosStatic;
+    userAgent: string;
 }
 
 class NicoClient {
-    private nicoVideoJP: www_NicoVideoJP;
+    private www_nicoVideoJP: www_NicoVideoJP;
+    private nvapi_nicoVideoJP: nvapi_NicoVideoJP;
+    private account_nicoVideoJP: account_NicoVideoJP;
 
-    constructor(option: NicoClientOption = {}) {
-        this.nicoVideoJP = new www_NicoVideoJP(option.apiClients?.nicoVideoJP);
+    public sessionID?: string;
+    public axios: AxiosStatic;
+    public userAgent: string;
 
-        console.log('NicoAPI initialized');
+    constructor(option: NicoClientOption) {
+        this.sessionID = option.sessionID;
+        this.axios = option.axios;
+        this.userAgent = option.userAgent;
+
+        this.www_nicoVideoJP = new www_NicoVideoJP(this);
+        this.nvapi_nicoVideoJP = new nvapi_NicoVideoJP(this);
+        this.account_nicoVideoJP = new account_NicoVideoJP(this);
     }
 
     async getVideo(videoID: string) {
-        const data = await this.nicoVideoJP.fetchVideoInfo(videoID);
+        const data = await this.www_nicoVideoJP.fetchVideoInfo(videoID);
         return new Video(this, data);
+    }
+
+    checkUpdate(frontendId: string, frontendVersion: string, osVersion?: string) {
+        return this.nvapi_nicoVideoJP.fetchHello(frontendId, frontendVersion, osVersion);
     }
 }
 

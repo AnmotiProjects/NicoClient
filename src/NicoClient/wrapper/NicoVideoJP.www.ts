@@ -1,20 +1,18 @@
-import ApiClient from './apiClients/nicoVideoJP';
+import NicoVideoJP from './NicoVideoJP';
 import generateActionTrackID from '../utils/generateActionTrackID';
+import BaseWrapper from './BaseWrapper';
 
-class NicoVideoJP {
-    private apiClient: ApiClient;
-
-    constructor(apiClient?: new () => ApiClient) {
-        this.apiClient = new (apiClient || ApiClient)();
+class www_NicoVideoJP extends NicoVideoJP {
+    static subDomain = 'www';
+    constructor(...args: ConstructorParameters<typeof BaseWrapper>) {
+        super(www_NicoVideoJP.subDomain, ...args);
     }
 
     async fetchVideoInfo(videoID: string) {
-        const res = await this.apiClient.post(videoID, {
-            subDomain: 'www',
+        const res = await this.post(videoID, {
             path: 'api/watch/v3_guest/',
-            params: {
-                actionTrackId: generateActionTrackID(),
-            },
+            params: { actionTrackId: generateActionTrackID() },
+            defaultHeaders: true,
         });
         const response = res.data as NicoVideoJPRawResponse<NicoVideoJPVideoInfoData>;
         if (response.meta.status !== 200 || response.data === undefined) {
@@ -24,4 +22,4 @@ class NicoVideoJP {
     }
 }
 
-export default NicoVideoJP;
+export default www_NicoVideoJP;
