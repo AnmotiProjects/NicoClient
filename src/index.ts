@@ -1,11 +1,13 @@
 import fs from 'fs';
+import dotenv from 'dotenv';
 import axios from 'axios';
 import NicoClient from './NicoClient';
 import www_NicoVideoJP from './NicoClient/wrapper/NicoVideoJP.www';
 import nvapi_NicoVideoJP from './NicoClient/wrapper/NicoVideoJP.nvapi';
 
-const sessionID =
-    'user_session_118200835_8b9a1032898ebb50945b4910928c921a3e789e6adda5bf0fd0c709400e223a0c';
+dotenv.config();
+
+const sessionID = process.env.SESSION_ID;
 
 async function main() {
     const api = new NicoClient({
