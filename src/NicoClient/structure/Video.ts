@@ -5,6 +5,20 @@ interface NicoClientVideoUser {
     id: number;
     nickname: string;
     iconURL: string;
+    live?: NicoVideoJPVideoInfoOwnerLiveData;
+    isVideosPublic: boolean;
+    isMylistsPublic: boolean;
+}
+
+interface NicoClientVideoChannel {
+    id: string;
+    name: string;
+    isOfficialAnime: boolean;
+    isDisplayAdBanner: boolean;
+    thumbnail: {
+        url: string;
+        smallUrl: string;
+    };
 }
 
 interface NicoClientVideoTagData {
@@ -47,6 +61,7 @@ class Video extends Base {
     public readonly likeCount: number;
 
     public readonly owner?: NicoClientVideoUser;
+    public readonly channel?: NicoClientVideoChannel;
     public readonly genre: NicoVideoJPVideoInfoGenre;
     public readonly thumbnail: NicoVideoJPVideoInfoData['video']['thumbnail'];
     public readonly tags: Map<string, NicoClientVideoTagData>;
@@ -89,11 +104,15 @@ class Video extends Base {
         this.likeCount = data.video.count.like;
 
         if (data.owner !== null) {
-            this.owner = {
-                id: data.owner.id,
-                nickname: data.owner.nickname,
-                iconURL: data.owner.iconUrl,
-            };
+            const { id, nickname, iconUrl, live, isVideosPublic, isMylistsPublic } = data.owner;
+            this.owner = { id, nickname, iconURL: iconUrl, isVideosPublic, isMylistsPublic };
+            if (live !== null) {
+                this.owner.live = live;
+            }
+        }
+        if (data.channel !== null) {
+            const { id, name, isOfficialAnime, isDisplayAdBanner, thumbnail } = data.channel;
+            this.channel = { id, name, isOfficialAnime, isDisplayAdBanner, thumbnail };
         }
         this.genre = data.genre;
         this.thumbnail = data.video.thumbnail;

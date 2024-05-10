@@ -142,8 +142,8 @@ interface NicoVideoJPVideoInfoData {
             nicosid: string;
             lang: string;
             watchTrackId: string;
-            channelId: string;
-            genre: string;
+            channelId?: string;
+            genre?: string;
         };
         items: any[];
         reason: string | null;
@@ -177,11 +177,21 @@ interface NicoVideoJPVideoInfoOwnerData {
     nickname: string;
     iconUrl: string;
     channel: any | null;
-    live: any | null;
+    live: NicoVideoJPVideoInfoOwnerLiveData | null;
     isVideosPublic: boolean;
     isMylistsPublic: boolean;
     videoLiveNotice: any | null;
     viewer: any | null;
+}
+
+interface NicoVideoJPVideoInfoOwnerLiveData {
+    id: string;
+    title: string;
+    url: string;
+    begunAt: string;
+    isVideoLive: boolean;
+    videoLiveOnAirStartTime: any | null;
+    thumbnailUrl: any | null;
 }
 
 interface NicoVideoJPVideoInfoGenre {
