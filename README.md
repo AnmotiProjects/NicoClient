@@ -4,6 +4,6 @@
 
 ## Reference
 
-<https://qiita.com/vram/items/0b14bc800ce8fd69b70d>
-<https://zenn.dev/negima1072/articles/nvcomment-api>
+<https://qiita.com/vram/items/0b14bc800ce8fd69b70d>  
+<https://zenn.dev/negima1072/articles/nvcomment-api>  
 <https://github.com/popo-nyan/Nicoaccount-Signature>
